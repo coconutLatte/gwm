@@ -1,5 +1,13 @@
 # Changelog / 更新日志
 
+## 1.0.2
+
+- Configure the Marketplace publisher as `Lip9527` and update workspace recommendations and integration tests.
+- Document the migration from the earlier local publisher and the manual Marketplace upload process.
+
+- Marketplace 发布者设为 `Lip9527`，同步工作区推荐和集成测试。
+- 补充旧本地发布者的迁移说明，以及 Marketplace 手动上传流程。
+
 ## 1.0.1
 
 - Move commit dates and authors to the second line beside the full commit hash, keeping them visible when commit titles are long.

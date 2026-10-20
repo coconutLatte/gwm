@@ -33,10 +33,12 @@ export async function run(): Promise<void> {
   // Git status can refresh index metadata; stabilize it before taking the byte snapshot.
   repositories.forEach(repository => execFileSync('git', ['-C', repository, 'status', '--porcelain']));
   const before = repositories.map(snapshot);
-  const navigator = await vscode.extensions.getExtension<NavigatorApi & ReviewApi>('lip-local.requirement-workspaces')!.activate();
+  const packageManifest = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8')) as { publisher: string; name: string };
+  const extension = vscode.extensions.getExtension<NavigatorApi & ReviewApi>(`${packageManifest.publisher}.${packageManifest.name}`)!;
+  const navigator = await extension.activate();
   const locale = process.env.REQUIREMENT_TEST_LOCALE ?? 'en';
   assert.equal(vscode.env.language.toLowerCase(), locale.toLowerCase(), 'The extension must use the VS Code UI locale');
-  const manifest = vscode.extensions.getExtension('lip-local.requirement-workspaces')!.packageJSON;
+  const manifest = extension.packageJSON;
   assert.equal(manifest.contributes.views.scm[1].name, locale === 'zh-cn' ? '提交汇总 Review' : 'Commit Review');
   const git = (await vscode.extensions.getExtension<GitExtension>('vscode.git')!.activate()).getAPI(1);
   const alpha = path.join(fixture, '.worktrees/review-a/api');

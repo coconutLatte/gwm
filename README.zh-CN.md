@@ -4,21 +4,21 @@
 
 在 VS Code 中按需求管理多个 Git 仓库的查看范围。通过 **worktree manage** 需求树选择需求，再用 VS Code 内置源代码管理和 diff 编辑器查看各仓库的改动；也可以勾选多个提交，在同一份文件列表里 review 它们合并后的净改动。
 
-## 安装 v1.0.1
+## 安装 v1.0.2
 
 需要 **VS Code 1.100 及以上版本**、可通过 `PATH` 调用的 Git，以及已启用的 VS Code 内置 **Git** 扩展。直接安装插件不需要 Node.js；从源码构建时才需要。
 
-1. 下载 [gwm-1.0.1.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.1/releases/v1.0.1/gwm-1.0.1.vsix)。
+1. 下载 [gwm-1.0.2.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.2/releases/v1.0.2/gwm-1.0.2.vsix)。
 2. 打开 VS Code 的**扩展**面板，点击 **… → 从 VSIX 安装…**，选择下载的文件。
 3. 如有提示，在命令面板执行 **开发人员: 重新加载窗口（Developer: Reload Window）**。
 
 也可以通过终端安装：
 
 ```sh
-code --install-extension ./gwm-1.0.1.vsix --force
+code --install-extension ./gwm-1.0.2.vsix --force
 ```
 
-安装包与 SHA-256 校验值统一放在 [`releases/v1.0.1/`](releases/v1.0.1/)。需要校验时，将 `SHA256SUMS` 与安装包放在同一目录，macOS 执行 `shasum -a 256 -c SHA256SUMS`，Linux 执行 `sha256sum -c SHA256SUMS`。
+安装包与 SHA-256 校验值统一放在 [`releases/v1.0.2/`](releases/v1.0.2/)。需要校验时，将 `SHA256SUMS` 与安装包放在同一目录，macOS 执行 `shasum -a 256 -c SHA256SUMS`，Linux 执行 `sha256sum -c SHA256SUMS`。
 
 ## 1. 准备目录结构
 
@@ -140,6 +140,10 @@ npm run package
 
 源码按目录发现（`catalog.ts`）、原生 SCM 导航（`extension.ts`、`gitApi.ts`）、提交汇总（`commitReview.ts`）、汇总界面与虚拟文件（`reviewView.ts`、`reviewHtml.ts`）、国际化（`i18n.ts`、`package.nls*.json`、`l10n/`）划分。构建会检查翻译覆盖和参数占位符。
 
-打包版本以 `package.json` 为准，并与 `package-lock.json` 保持同步。`npm run package` 自动生成 `releases/v<版本>/gwm-<版本>.vsix` 和 `SHA256SUMS`。发布时一并提交源码、文档和对应安装包，再为该提交打 `v<版本>` 标签。Git 不跟踪生成的 JavaScript 和依赖目录；安装包排除测试、示例及历史安装包。插件标识保持稳定，已有安装可直接升级。
+打包版本以 `package.json` 为准，并与 `package-lock.json` 保持同步。`npm run package` 自动生成 `releases/v<版本>/gwm-<版本>.vsix` 和 `SHA256SUMS`。发布时一并提交源码、文档和对应安装包，再为该提交打 `v<版本>` 标签。Git 不跟踪生成的 JavaScript 和依赖目录；安装包排除测试、示例及历史安装包。当前插件标识为 `Lip9527.requirement-workspaces`。从早期 `lip-local.requirement-workspaces` 版本迁移时，安装新包并卸载旧插件，然后重新加载窗口；两者只启用一个。
 
 版本记录见 [CHANGELOG.md](CHANGELOG.md)。仓库当前保留所有权利（`UNLICENSED`）。
+
+## 发布到 Marketplace
+
+安装包已配置发布者 **Lip9527**。登录 [Marketplace 发布者管理页面](https://marketplace.visualstudio.com/manage)，选择该发布者；首次发布通过 **New extension → Visual Studio Code** 上传 `releases/v1.0.2/gwm-1.0.2.vsix`，后续版本在已有扩展条目中更新。本仓库的构建和 Git 推送不会自动发布到 Marketplace。

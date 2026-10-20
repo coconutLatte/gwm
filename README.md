@@ -4,21 +4,21 @@
 
 Review multiple Git repositories grouped by requirement in VS Code. Choose a requirement in the **worktree manage** tree, then inspect its repositories with VS Code's built-in Source Control and diff editors. Select commits to review their combined net changes in one file list.
 
-## Install v1.0.1
+## Install v1.0.2
 
 Requires **VS Code 1.100 or later**, Git available on `PATH`, and the built-in **Git** extension enabled. Node.js is only needed to build from source.
 
-1. Download [gwm-1.0.1.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.1/releases/v1.0.1/gwm-1.0.1.vsix).
+1. Download [gwm-1.0.2.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.2/releases/v1.0.2/gwm-1.0.2.vsix).
 2. In VS Code, open **Extensions**, click **… → Install from VSIX…**, and select the downloaded file.
 3. Run **Developer: Reload Window** from the Command Palette if prompted.
 
 Or install from a terminal:
 
 ```sh
-code --install-extension ./gwm-1.0.1.vsix --force
+code --install-extension ./gwm-1.0.2.vsix --force
 ```
 
-Packages and SHA-256 checksums are stored under [`releases/v1.0.1/`](releases/v1.0.1/). To verify a downloaded package on macOS, put `SHA256SUMS` beside it and run `shasum -a 256 -c SHA256SUMS`; on Linux use `sha256sum -c SHA256SUMS`.
+Packages and SHA-256 checksums are stored under [`releases/v1.0.2/`](releases/v1.0.2/). To verify a downloaded package on macOS, put `SHA256SUMS` beside it and run `shasum -a 256 -c SHA256SUMS`; on Linux use `sha256sum -c SHA256SUMS`.
 
 ## 1. Prepare the directory structure
 
@@ -140,6 +140,10 @@ Integration tests use temporary repositories, worktrees and isolated VS Code pro
 
 The source is split into directory discovery (`catalog.ts`), native SCM navigation (`extension.ts`, `gitApi.ts`), commit aggregation (`commitReview.ts`), review UI and virtual files (`reviewView.ts`, `reviewHtml.ts`), and localization (`i18n.ts`, `package.nls*.json`, `l10n/`). Builds check translation coverage and placeholders.
 
-`package.json` is the version source for packaging; keep its version and `package-lock.json` in sync. `npm run package` builds `releases/v<version>/gwm-<version>.vsix` and `SHA256SUMS` automatically. Commit the source, documentation and matching package, then tag the commit `v<version>`. Generated JavaScript and dependencies are excluded from Git; VSIX packages exclude tests, examples and previous packages. The extension identifier is preserved so existing installations upgrade in place.
+`package.json` is the version source for packaging; keep its version and `package-lock.json` in sync. `npm run package` builds `releases/v<version>/gwm-<version>.vsix` and `SHA256SUMS` automatically. Commit the source, documentation and matching package, then tag the commit `v<version>`. Generated JavaScript and dependencies are excluded from Git; VSIX packages exclude tests, examples and previous packages. The extension identifier is `Lip9527.requirement-workspaces`. When migrating from the earlier `lip-local.requirement-workspaces` builds, install the new package and uninstall the old extension, then reload the window. Enable only one of them at a time.
 
 See [CHANGELOG.md](CHANGELOG.md) for release notes. This repository currently retains all rights (`UNLICENSED`).
+
+## Marketplace publishing
+
+The package is configured for publisher **Lip9527**. Sign in to [Marketplace publisher management](https://marketplace.visualstudio.com/manage), select that publisher, and upload `releases/v1.0.2/gwm-1.0.2.vsix` via **New extension → Visual Studio Code** for the first publication. Update the existing extension for subsequent versions. Building or pushing this repository does not publish to Marketplace.

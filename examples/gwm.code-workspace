@@ -1,6 +1,8 @@
 {
   "folders": [
-    { "path": "." }
+    {
+      "path": "."
+    }
   ],
   "settings": {
     "requirementWorkspaces.root": ".worktrees",
@@ -9,5 +11,10 @@
     "git.openRepositoryInParentFolders": "never",
     "scm.alwaysShowRepositories": true,
     "scm.repositories.selectionMode": "multiple"
+  },
+  "extensions": {
+    "recommendations": [
+      "Lip9527.requirement-workspaces"
+    ]
   }
 }

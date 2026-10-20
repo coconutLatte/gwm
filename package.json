@@ -2,8 +2,8 @@
   "name": "requirement-workspaces",
   "displayName": "worktree manage",
   "description": "%extension.description%",
-  "version": "1.0.1",
-  "publisher": "lip-local",
+  "version": "1.0.2",
+  "publisher": "Lip9527",
   "private": true,
   "license": "UNLICENSED",
   "engines": {
