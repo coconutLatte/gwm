@@ -1,0 +1,181 @@
+{
+  "name": "requirement-workspaces",
+  "displayName": "worktree manage",
+  "description": "%extension.description%",
+  "version": "1.0.0",
+  "publisher": "lip-local",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "SCM Providers"
+  ],
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.cjs",
+  "contributes": {
+    "views": {
+      "scm": [
+        {
+          "id": "requirementWorkspaces.requirements",
+          "name": "worktree manage",
+          "icon": "$(folder-library)"
+        },
+        {
+          "id": "requirementWorkspaces.commitReview",
+          "name": "%view.commitReview%",
+          "icon": "$(git-compare)",
+          "type": "webview"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "requirementWorkspaces.requirements",
+        "contents": "%view.welcome%"
+      }
+    ],
+    "commands": [
+      {
+        "command": "requirementWorkspaces.chooseRoot",
+        "title": "%requirementWorkspaces.chooseRoot.title%",
+        "category": "worktree manage",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "requirementWorkspaces.refresh",
+        "title": "%requirementWorkspaces.refresh.title%",
+        "category": "worktree manage",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "requirementWorkspaces.choose",
+        "title": "%requirementWorkspaces.choose.title%",
+        "category": "worktree manage",
+        "icon": "$(folder-library)"
+      },
+      {
+        "command": "requirementWorkspaces.selectMain",
+        "title": "%requirementWorkspaces.selectMain.title%",
+        "category": "worktree manage",
+        "icon": "$(home)"
+      },
+      {
+        "command": "requirementWorkspaces.select",
+        "title": "%requirementWorkspaces.select.title%",
+        "category": "worktree manage",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "requirementWorkspaces.reviewCommits",
+        "title": "%requirementWorkspaces.reviewCommits.title%",
+        "category": "worktree manage",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "requirementWorkspaces.openReviewFile",
+        "title": "%requirementWorkspaces.openReviewFile.title%",
+        "category": "worktree manage"
+      },
+      {
+        "command": "requirementWorkspaces.clearReview",
+        "title": "%requirementWorkspaces.clearReview.title%",
+        "category": "worktree manage",
+        "icon": "$(clear-all)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "requirementWorkspaces.select",
+          "when": "false"
+        },
+        {
+          "command": "requirementWorkspaces.openReviewFile",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "requirementWorkspaces.selectMain",
+          "when": "view == requirementWorkspaces.requirements",
+          "group": "navigation@0"
+        },
+        {
+          "command": "requirementWorkspaces.chooseRoot",
+          "when": "view == requirementWorkspaces.requirements",
+          "group": "navigation@1"
+        },
+        {
+          "command": "requirementWorkspaces.refresh",
+          "when": "view == requirementWorkspaces.requirements",
+          "group": "navigation@2"
+        },
+        {
+          "command": "requirementWorkspaces.reviewCommits",
+          "when": "view == requirementWorkspaces.commitReview",
+          "group": "navigation@1"
+        },
+        {
+          "command": "requirementWorkspaces.clearReview",
+          "when": "view == requirementWorkspaces.commitReview",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "requirementWorkspaces.select",
+          "when": "view == requirementWorkspaces.requirements && viewItem == requirement",
+          "group": "inline"
+        },
+        {
+          "command": "requirementWorkspaces.reviewCommits",
+          "when": "view == requirementWorkspaces.requirements && viewItem == requirementRepository",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "worktree manage",
+      "properties": {
+        "requirementWorkspaces.root": {
+          "type": "string",
+          "default": "",
+          "scope": "window",
+          "description": "%configuration.root%"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "type-check": "tsc --noEmit",
+    "test": "npm run build && node --test dist/*.test.cjs",
+    "test:integration": "node scripts/integration.mjs",
+    "vscode:prepublish": "npm run type-check && npm run build",
+    "package": "node scripts/package.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.100.0",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.0",
+    "esbuild": "^0.25.0",
+    "typescript": "~5.9.0"
+  },
+  "l10n": "./l10n",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coconutLatte/gwm.git"
+  },
+  "homepage": "https://github.com/coconutLatte/gwm#readme",
+  "bugs": {
+    "url": "https://github.com/coconutLatte/gwm/issues"
+  }
+}

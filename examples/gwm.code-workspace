@@ -1,0 +1,13 @@
+{
+  "folders": [
+    { "path": "." }
+  ],
+  "settings": {
+    "requirementWorkspaces.root": ".worktrees",
+    "git.autoRepositoryDetection": false,
+    "git.detectWorktrees": false,
+    "git.openRepositoryInParentFolders": "never",
+    "scm.alwaysShowRepositories": true,
+    "scm.repositories.selectionMode": "multiple"
+  }
+}

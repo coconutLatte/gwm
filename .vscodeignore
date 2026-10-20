@@ -1,0 +1,16 @@
+node_modules/**
+src/**
+test/**
+scripts/**
+releases/**
+examples/**
+.github/**
+.editorconfig
+.gitattributes
+dist/*.test.cjs
+dist/integration.cjs
+.test-output/**
+*.vsix
+tsconfig.json
+package-lock.json
+.gitignore

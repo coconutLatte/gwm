@@ -1,0 +1,14 @@
+{
+  "extension.description": "Group worktrees by requirement and review changes with VS Code Source Control.",
+  "view.commitReview": "Commit Review",
+  "view.welcome": "Select the worktree parent folder to browse requirements and repositories.\n[Select Worktree Parent Folder](command:requirementWorkspaces.chooseRoot)",
+  "requirementWorkspaces.chooseRoot.title": "Select Worktree Parent Folder",
+  "requirementWorkspaces.refresh.title": "Refresh Requirements",
+  "requirementWorkspaces.choose.title": "Switch Requirement",
+  "requirementWorkspaces.selectMain.title": "Return to Main Workspace",
+  "requirementWorkspaces.select.title": "View Requirement Changes",
+  "requirementWorkspaces.reviewCommits.title": "Select Commits for Combined Review",
+  "requirementWorkspaces.openReviewFile.title": "View Combined Diff",
+  "requirementWorkspaces.clearReview.title": "Clear Commit Review",
+  "configuration.root": "Parent folder of requirement workspaces, for example .worktrees. Relative paths are resolved from the .code-workspace file."
+}

@@ -1,0 +1,14 @@
+{
+  "extension.description": "按需求选择多个 worktree，用 VS Code 原生源代码管理 review 代码。",
+  "view.commitReview": "提交汇总 Review",
+  "view.welcome": "选择 worktree 父目录，按需求浏览子仓库。\n[选择worktree父目录](command:requirementWorkspaces.chooseRoot)",
+  "requirementWorkspaces.chooseRoot.title": "选择worktree父目录",
+  "requirementWorkspaces.refresh.title": "刷新需求",
+  "requirementWorkspaces.choose.title": "切换需求",
+  "requirementWorkspaces.selectMain.title": "返回主工作区",
+  "requirementWorkspaces.select.title": "查看需求改动",
+  "requirementWorkspaces.reviewCommits.title": "勾选提交并汇总 Review",
+  "requirementWorkspaces.openReviewFile.title": "查看汇总 diff",
+  "requirementWorkspaces.clearReview.title": "清除提交汇总",
+  "configuration.root": "需求父目录，例如 .worktrees。相对路径以 .code-workspace 所在目录为基准。"
+}
