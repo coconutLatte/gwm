@@ -125,8 +125,7 @@ export class ReviewView implements vscode.WebviewViewProvider, vscode.FileSystem
       picker.buttons = initial.length === 200 ? [more] : [];
       const items = (commits: ReviewCommit[]): CommitItem[] => commits.map(commit => ({
         label: `${commit.hash.slice(0, 8)} ${commit.subject}`,
-        description: `${commit.date.slice(0, 10)} · ${commit.author}${commit.parents.length > 1 ? ' · merge' : ''}`,
-        detail: commit.hash, commit,
+        detail: `${commit.date.slice(0, 10)} · ${commit.author} · ${commit.hash}${commit.parents.length > 1 ? ' · merge' : ''}`, commit,
       }));
       picker.items = items(initial);
       const existing = this.getReview();

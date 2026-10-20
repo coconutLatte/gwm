@@ -4,21 +4,21 @@
 
 在 VS Code 中按需求管理多个 Git 仓库的查看范围。通过 **worktree manage** 需求树选择需求，再用 VS Code 内置源代码管理和 diff 编辑器查看各仓库的改动；也可以勾选多个提交，在同一份文件列表里 review 它们合并后的净改动。
 
-## 安装 v1.0.0
+## 安装 v1.0.1
 
 需要 **VS Code 1.100 及以上版本**、可通过 `PATH` 调用的 Git，以及已启用的 VS Code 内置 **Git** 扩展。直接安装插件不需要 Node.js；从源码构建时才需要。
 
-1. 下载 [gwm-1.0.0.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.0/releases/v1.0.0/gwm-1.0.0.vsix)。
+1. 下载 [gwm-1.0.1.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.1/releases/v1.0.1/gwm-1.0.1.vsix)。
 2. 打开 VS Code 的**扩展**面板，点击 **… → 从 VSIX 安装…**，选择下载的文件。
 3. 如有提示，在命令面板执行 **开发人员: 重新加载窗口（Developer: Reload Window）**。
 
 也可以通过终端安装：
 
 ```sh
-code --install-extension ./gwm-1.0.0.vsix --force
+code --install-extension ./gwm-1.0.1.vsix --force
 ```
 
-安装包与 SHA-256 校验值统一放在 [`releases/v1.0.0/`](releases/v1.0.0/)。需要校验时，将 `SHA256SUMS` 与安装包放在同一目录，macOS 执行 `shasum -a 256 -c SHA256SUMS`，Linux 执行 `sha256sum -c SHA256SUMS`。
+安装包与 SHA-256 校验值统一放在 [`releases/v1.0.1/`](releases/v1.0.1/)。需要校验时，将 `SHA256SUMS` 与安装包放在同一目录，macOS 执行 `shasum -a 256 -c SHA256SUMS`，Linux 执行 `sha256sum -c SHA256SUMS`。
 
 ## 1. 准备目录结构
 
@@ -89,7 +89,7 @@ Git 会在命令指定的位置创建目录；`.worktrees` 只是约定名称。
 ## 4. 勾选多个提交，查看整体改动
 
 1. 展开需求，在某个仓库右侧点击对比按钮 **“勾选提交并汇总 Review”**；也可以在命令面板执行同名命令，再选择仓库。
-2. 勾选要 review 的 commit，按 **Enter** 确认；可用**空格**切换勾选状态。支持按 hash、标题或作者筛选，顶部历史按钮每次加载更早的 200 个提交。
+2. 勾选要 review 的 commit，按 **Enter** 确认；可用**空格**切换勾选状态。第二行显示日期、作者及完整 commit 号，不受上一行标题长度影响。支持按 hash、标题或作者筛选，顶部历史按钮每次加载更早的 200 个提交。
 3. 在源代码管理下的 **“提交汇总 Review”** 查看总增加/删除行数及最终净改动文件。点击文件行，在原生只读 diff 中查看前后差异。
 
 | 标记 | 含义 |

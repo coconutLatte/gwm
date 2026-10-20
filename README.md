@@ -4,21 +4,21 @@
 
 Review multiple Git repositories grouped by requirement in VS Code. Choose a requirement in the **worktree manage** tree, then inspect its repositories with VS Code's built-in Source Control and diff editors. Select commits to review their combined net changes in one file list.
 
-## Install v1.0.0
+## Install v1.0.1
 
 Requires **VS Code 1.100 or later**, Git available on `PATH`, and the built-in **Git** extension enabled. Node.js is only needed to build from source.
 
-1. Download [gwm-1.0.0.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.0/releases/v1.0.0/gwm-1.0.0.vsix).
+1. Download [gwm-1.0.1.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.1/releases/v1.0.1/gwm-1.0.1.vsix).
 2. In VS Code, open **Extensions**, click **… → Install from VSIX…**, and select the downloaded file.
 3. Run **Developer: Reload Window** from the Command Palette if prompted.
 
 Or install from a terminal:
 
 ```sh
-code --install-extension ./gwm-1.0.0.vsix --force
+code --install-extension ./gwm-1.0.1.vsix --force
 ```
 
-Packages and SHA-256 checksums are stored under [`releases/v1.0.0/`](releases/v1.0.0/). To verify a downloaded package on macOS, put `SHA256SUMS` beside it and run `shasum -a 256 -c SHA256SUMS`; on Linux use `sha256sum -c SHA256SUMS`.
+Packages and SHA-256 checksums are stored under [`releases/v1.0.1/`](releases/v1.0.1/). To verify a downloaded package on macOS, put `SHA256SUMS` beside it and run `shasum -a 256 -c SHA256SUMS`; on Linux use `sha256sum -c SHA256SUMS`.
 
 ## 1. Prepare the directory structure
 
@@ -89,7 +89,7 @@ Switching requirements changes workspace folders and the visible native Git repo
 ## 4. Review selected commits together
 
 1. Expand a requirement and click the compare button next to a repository (**Select Commits for Combined Review**). Alternatively, run that command from the Command Palette and choose a repository.
-2. Check the commits you want to review, then press **Enter**. Use **Space** to toggle a commit. Search by hash, subject or author. The history button loads 200 earlier commits at a time.
+2. Check the commits you want to review, then press **Enter**. Use **Space** to toggle a commit. The second line shows the date, author and full commit hash, independently of the title above. Search by hash, subject or author. The history button loads 200 earlier commits at a time.
 3. Open **Commit Review** under Source Control. It shows the combined **net** additions and deletions, plus the file list. Click a row to open a read-only native diff.
 
 | Marker | Meaning |

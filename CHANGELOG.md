@@ -1,5 +1,11 @@
 # Changelog / 更新日志
 
+## 1.0.1
+
+- Move commit dates and authors to the second line beside the full commit hash, keeping them visible when commit titles are long.
+
+- 提交日期和作者移到第二行，与完整 commit 号并列，避免被长标题挤出可见区域。
+
 ## 1.0.0
 
 First version published to this repository. Earlier local builds (0.x) are consolidated into this release.
