@@ -157,7 +157,7 @@ git tag v1.0.3
 git push origin v1.0.3
 ```
 
-To publish now, create an Azure DevOps PAT with the **Marketplace (Manage)** scope and access to **All accessible organizations**, then store it as the GitHub Actions secret `VSCE_PAT`. No repository variable is needed for this default mode.
+To publish now, create an Azure DevOps PAT with the **Marketplace (Manage)** scope, then store it as the GitHub Actions secret `VSCE_PAT`. No repository variable is needed for this default mode. If no publishing credential is configured, the workflow still runs the checks, builds the VSIX and uploads it as an artifact, but skips the Marketplace upload.
 
 When Microsoft enables trusted publishing for the publisher, configure `coconutLatte/gwm` and `.github/workflows/publish.yml` in Marketplace, create a repository variable `MARKETPLACE_AUTH=oidc`, and the workflow will switch to short-lived GitHub OIDC credentials without changing the publish command.
 

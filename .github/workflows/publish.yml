@@ -23,6 +23,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     environment: marketplace
+    env:
+      MARKETPLACE_AUTH: ${{ vars.MARKETPLACE_AUTH }}
+      VSCE_PAT: ${{ secrets.VSCE_PAT }}
     steps:
       - name: Check out release tag
         uses: actions/checkout@v4
@@ -60,19 +63,21 @@ jobs:
         run: npm run package
 
       - name: Publish with Marketplace trusted publishing
-        if: vars.MARKETPLACE_AUTH == 'oidc'
+        if: env.MARKETPLACE_AUTH == 'oidc'
         run: >-
           npx --no-install vsce publish
           --oidc
           --packagePath "releases/v${EXTENSION_VERSION}/gwm-${EXTENSION_VERSION}.vsix"
 
       - name: Publish with temporary Marketplace PAT
-        if: vars.MARKETPLACE_AUTH != 'oidc'
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        if: env.MARKETPLACE_AUTH != 'oidc' && env.VSCE_PAT != ''
         run: >-
           npx --no-install vsce publish
           --packagePath "releases/v${EXTENSION_VERSION}/gwm-${EXTENSION_VERSION}.vsix"
+
+      - name: Explain skipped Marketplace publishing
+        if: env.MARKETPLACE_AUTH != 'oidc' && env.VSCE_PAT == ''
+        run: echo "::notice::Marketplace publishing skipped; configure MARKETPLACE_AUTH=oidc or the VSCE_PAT secret to publish automatically."
 
       - name: Upload release package
         uses: actions/upload-artifact@v4

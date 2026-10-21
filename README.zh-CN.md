@@ -157,7 +157,7 @@ git tag v1.0.3
 git push origin v1.0.3
 ```
 
-当前发布需要创建具有 **Marketplace (Manage)** 权限、可访问 **All accessible organizations** 的 Azure DevOps PAT，并保存为 GitHub Actions secret `VSCE_PAT`。默认方式不需要设置仓库变量。
+当前发布需要创建具有 **Marketplace (Manage)** 权限的 Azure DevOps PAT，并保存为 GitHub Actions secret `VSCE_PAT`。默认方式不需要设置仓库变量。如果还没有配置发布凭据，工作流仍会执行检查、构建 VSIX 并上传 artifact，但会跳过 Marketplace 上传。
 
 微软开放 trusted publishing 后，在 Marketplace 中配置仓库 `coconutLatte/gwm` 和工作流 `.github/workflows/publish.yml`，再创建仓库变量 `MARKETPLACE_AUTH=oidc`。工作流会自动改用短期 GitHub OIDC 凭据，无需修改发布命令。
 
