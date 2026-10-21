@@ -148,4 +148,15 @@ See [CHANGELOG.md](CHANGELOG.md) for release notes. This repository currently re
 
 ## Marketplace publishing
 
-The package is configured for publisher **Lip9527**. Sign in to [Marketplace publisher management](https://marketplace.visualstudio.com/manage), select that publisher, and upload `releases/v1.0.3/gwm-1.0.3.vsix` via **New extension → Visual Studio Code** for the first publication. Update the existing extension for subsequent versions. Building or pushing this repository does not publish to Marketplace.
+The package is configured for publisher **Lip9527**. Add a trusted publishing policy for repository `coconutLatte/gwm` and workflow `.github/workflows/publish.yml` in [Marketplace publisher management](https://marketplace.visualstudio.com/manage). The policy authorizes short-lived GitHub Actions OIDC credentials, so no PAT or `VSCE_PAT` secret is required.
+
+After the policy is configured, pushing a matching release tag publishes automatically:
+
+```sh
+git tag v1.0.3
+git push origin v1.0.3
+```
+
+The workflow runs type checks and tests, packages the version stored in `package.json`, publishes the matching VSIX with `vsce publish --oidc`, and uploads the package as a workflow artifact. The **Publish VS Code Extension** workflow can also be started manually with an existing tag. Marketplace installation updates usually become visible within a few minutes.
+
+Release notes are read from [CHANGELOG.md](CHANGELOG.md). Keep each version’s first section focused on user-visible behavior and include the release date.

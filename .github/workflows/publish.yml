@@ -1,0 +1,72 @@
+name: Publish VS Code Extension
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag, for example v1.0.3
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: marketplace-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: marketplace
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - name: Validate tag and extension version
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}"
+          version="$(node -p "require('./package.json').version")"
+          if [[ "$tag" != "v$version" ]]; then
+            echo "Release tag '$tag' does not match package version 'v$version'." >&2
+            exit 1
+          fi
+          echo "EXTENSION_VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build release package
+        run: npm run package
+
+      - name: Publish with Marketplace trusted publishing
+        run: >-
+          npx --no-install vsce publish
+          --oidc
+          --packagePath "releases/v${EXTENSION_VERSION}/gwm-${EXTENSION_VERSION}.vsix"
+
+      - name: Upload release package
+        uses: actions/upload-artifact@v4
+        with:
+          name: gwm-v${{ env.EXTENSION_VERSION }}
+          path: releases/v${{ env.EXTENSION_VERSION }}/
