@@ -1,5 +1,23 @@
 # Changelog / 更新日志
 
+## 1.0.3 — 2026-10-21
+
+### Fixed / 修复
+
+- Fixed VS Code becoming unresponsive when opening a multi-repository directory with `code .` while linked worktrees were discovered automatically.
+- Preserved Source Control isolation without repeatedly closing and reopening the same worktree.
+
+- 修复直接使用 `code .` 打开多仓库目录并启用 worktree 自动发现时，VS Code 卡死或无响应的问题。
+- 在保留源代码管理隔离能力的同时，避免反复关闭并重新打开同一个 worktree。
+
+### Improved / 改进
+
+- Coalesced high-frequency Git state and tree updates to reduce UI work in large workspaces.
+- Documented direct-folder opening alongside the saved-workspace workflow.
+
+- 合并高频 Git 状态与目录树刷新，降低大型工作区的界面负载。
+- 补充直接打开工作区目录的使用说明，同时保留原有 `.code-workspace` 工作流。
+
 ## 1.0.2
 
 - Configure the Marketplace publisher as `Lip9527` and update workspace recommendations and integration tests.

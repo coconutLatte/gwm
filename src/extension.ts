@@ -27,6 +27,7 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
   readonly onDidChangeTreeData = this.changes.event;
   private readonly subscriptions: vscode.Disposable[] = [];
   private readonly repositorySubscriptions = new Map<string, vscode.Disposable>();
+  private readonly ignoredRepositories = new Set<string>();
   private readonly tree: vscode.TreeView<Node>;
   private readonly statusBar: vscode.StatusBarItem;
   private watchers: vscode.Disposable[] = [];
@@ -36,8 +37,10 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
   private active: string | undefined;
   private scoped = false;
   private selecting = false;
+  private reconciling = false;
   private disposed = false;
   private timer: ReturnType<typeof setTimeout> | undefined;
+  private renderTimer: ReturnType<typeof setTimeout> | undefined;
   private refreshQueue: Promise<void> = Promise.resolve();
   private reconcileQueue: Promise<void> = Promise.resolve();
 
@@ -50,13 +53,16 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
     this.subscriptions.push(
       git.onDidOpenRepository(repository => {
         this.watchRepository(repository);
-        this.render();
-        if (this.scoped && !this.selecting) void this.scheduleReconcile().catch(showError);
+        this.scheduleRender();
+        const root = path.resolve(repository.rootUri.fsPath);
+        if (this.scoped && !this.selecting && !this.reconciling && !this.ignoredRepositories.has(root)) {
+          void this.scheduleReconcile().catch(showError);
+        }
       }),
       git.onDidCloseRepository(repository => {
         this.repositorySubscriptions.get(repository.rootUri.fsPath)?.dispose();
         this.repositorySubscriptions.delete(repository.rootUri.fsPath);
-        this.render();
+        this.scheduleRender();
       }),
       vscode.workspace.onDidChangeWorkspaceFolders(() => {
         if (!this.selecting) void this.refresh().catch(showError);
@@ -178,7 +184,9 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
       throw error;
     }
     const match = this.groups().find(group => samePaths(folders, this.workspacePaths(group)));
-    this.active = match ? this.groupId(match) : undefined;
+    const active = match ? this.groupId(match) : undefined;
+    if (active !== this.active) this.ignoredRepositories.clear();
+    this.active = active;
     // Filter only when workspace folders match a known main or requirement group.
     this.scoped = Boolean(match);
     this.render();
@@ -192,7 +200,13 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
   private watchRepository(repository: GitRepository): void {
     const root = repository.rootUri.fsPath;
     this.repositorySubscriptions.get(root)?.dispose();
-    this.repositorySubscriptions.set(root, repository.state.onDidChange(() => this.render()));
+    this.repositorySubscriptions.set(root, repository.state.onDidChange(() => this.scheduleRender()));
+  }
+
+  private scheduleRender(): void {
+    if (this.disposed) return;
+    clearTimeout(this.renderTimer);
+    this.renderTimer = setTimeout(() => this.render(), 50);
   }
 
   private render(): void {
@@ -221,17 +235,26 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
     const requirement = this.groups().find(group => this.groupId(group) === this.active);
     if (!this.scoped || !requirement || this.disposed) return;
     const wanted = new Set(requirement.repositories.map(repository => path.resolve(repository.path)));
-    for (const repository of [...this.git.repositories]) {
-      if (!wanted.has(path.resolve(repository.rootUri.fsPath))) {
-        // Native command: closes only the SCM view; does not change files, index or refs.
-        await vscode.commands.executeCommand('git.close', repository.rootUri);
+    this.reconciling = true;
+    try {
+      for (const repository of [...this.git.repositories]) {
+        const root = path.resolve(repository.rootUri.fsPath);
+        if (!wanted.has(root)) {
+          // Remember repositories closed by this filter. VS Code's automatic discovery may
+          // reopen them immediately; that event must not start another reconcile cycle.
+          this.ignoredRepositories.add(root);
+          // Native command: closes only the SCM view; does not change files, index or refs.
+          await vscode.commands.executeCommand('git.close', repository.rootUri);
+        }
       }
-    }
-    for (const repository of requirement.repositories) {
-      if (!this.loaded(repository.path)) {
-        // Explicitly reopen a repository previously closed in the SCM view.
-        await vscode.commands.executeCommand('git.openRepository', repository.path);
+      for (const repository of requirement.repositories) {
+        if (!this.loaded(repository.path)) {
+          // Explicitly reopen a repository previously closed in the SCM view.
+          await vscode.commands.executeCommand('git.openRepository', repository.path);
+        }
       }
+    } finally {
+      this.reconciling = false;
     }
     this.render();
   }
@@ -253,6 +276,7 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
       if (!requirement) throw new Error(t('Requirement no longer exists or has no repositories: {0}', name));
       this.requirements = fresh;
       this.main = main;
+      this.ignoredRepositories.clear();
       await this.context.workspaceState.update('worktreeRoot', this.root);
       const current = vscode.workspace.workspaceFolders ?? [];
       const target = this.workspacePaths(requirement);
@@ -320,6 +344,7 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
   dispose(): void {
     this.disposed = true;
     clearTimeout(this.timer);
+    clearTimeout(this.renderTimer);
     this.watchers.forEach(watcher => watcher.dispose());
     this.repositorySubscriptions.forEach(subscription => subscription.dispose());
     this.subscriptions.forEach(subscription => subscription.dispose());

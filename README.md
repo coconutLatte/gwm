@@ -4,21 +4,21 @@
 
 Review multiple Git repositories grouped by requirement in VS Code. Choose a requirement in the **worktree manage** tree, then inspect its repositories with VS Code's built-in Source Control and diff editors. Select commits to review their combined net changes in one file list.
 
-## Install v1.0.2
+## Install v1.0.3
 
 Requires **VS Code 1.100 or later**, Git available on `PATH`, and the built-in **Git** extension enabled. Node.js is only needed to build from source.
 
-1. Download [gwm-1.0.2.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.2/releases/v1.0.2/gwm-1.0.2.vsix).
+1. Download [gwm-1.0.3.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.3/releases/v1.0.3/gwm-1.0.3.vsix).
 2. In VS Code, open **Extensions**, click **… → Install from VSIX…**, and select the downloaded file.
 3. Run **Developer: Reload Window** from the Command Palette if prompted.
 
 Or install from a terminal:
 
 ```sh
-code --install-extension ./gwm-1.0.2.vsix --force
+code --install-extension ./gwm-1.0.3.vsix --force
 ```
 
-Packages and SHA-256 checksums are stored under [`releases/v1.0.2/`](releases/v1.0.2/). To verify a downloaded package on macOS, put `SHA256SUMS` beside it and run `shasum -a 256 -c SHA256SUMS`; on Linux use `sha256sum -c SHA256SUMS`.
+Packages and SHA-256 checksums are stored under [`releases/v1.0.3/`](releases/v1.0.3/). To verify a downloaded package on macOS, put `SHA256SUMS` beside it and run `shasum -a 256 -c SHA256SUMS`; on Linux use `sha256sum -c SHA256SUMS`.
 
 ## 1. Prepare the directory structure
 
@@ -69,6 +69,8 @@ The example configures the worktree parent and limits automatic Git discovery, s
 ```
 
 If using an existing saved workspace, add these settings to its `settings` object. `requirementWorkspaces.root` accepts an absolute path or a path relative to the `.code-workspace` file.
+
+You can also open the workspace folder directly with `code .`. Put the same Git discovery settings in the repository's `.vscode/settings.json`; automatic worktree discovery remains disabled while GWM opens only the repositories required by the selected main workspace or requirement.
 
 ## 3. Select a parent folder and review a requirement
 
@@ -146,4 +148,4 @@ See [CHANGELOG.md](CHANGELOG.md) for release notes. This repository currently re
 
 ## Marketplace publishing
 
-The package is configured for publisher **Lip9527**. Sign in to [Marketplace publisher management](https://marketplace.visualstudio.com/manage), select that publisher, and upload `releases/v1.0.2/gwm-1.0.2.vsix` via **New extension → Visual Studio Code** for the first publication. Update the existing extension for subsequent versions. Building or pushing this repository does not publish to Marketplace.
+The package is configured for publisher **Lip9527**. Sign in to [Marketplace publisher management](https://marketplace.visualstudio.com/manage), select that publisher, and upload `releases/v1.0.3/gwm-1.0.3.vsix` via **New extension → Visual Studio Code** for the first publication. Update the existing extension for subsequent versions. Building or pushing this repository does not publish to Marketplace.

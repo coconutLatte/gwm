@@ -4,21 +4,21 @@
 
 在 VS Code 中按需求管理多个 Git 仓库的查看范围。通过 **worktree manage** 需求树选择需求，再用 VS Code 内置源代码管理和 diff 编辑器查看各仓库的改动；也可以勾选多个提交，在同一份文件列表里 review 它们合并后的净改动。
 
-## 安装 v1.0.2
+## 安装 v1.0.3
 
 需要 **VS Code 1.100 及以上版本**、可通过 `PATH` 调用的 Git，以及已启用的 VS Code 内置 **Git** 扩展。直接安装插件不需要 Node.js；从源码构建时才需要。
 
-1. 下载 [gwm-1.0.2.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.2/releases/v1.0.2/gwm-1.0.2.vsix)。
+1. 下载 [gwm-1.0.3.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.3/releases/v1.0.3/gwm-1.0.3.vsix)。
 2. 打开 VS Code 的**扩展**面板，点击 **… → 从 VSIX 安装…**，选择下载的文件。
 3. 如有提示，在命令面板执行 **开发人员: 重新加载窗口（Developer: Reload Window）**。
 
 也可以通过终端安装：
 
 ```sh
-code --install-extension ./gwm-1.0.2.vsix --force
+code --install-extension ./gwm-1.0.3.vsix --force
 ```
 
-安装包与 SHA-256 校验值统一放在 [`releases/v1.0.2/`](releases/v1.0.2/)。需要校验时，将 `SHA256SUMS` 与安装包放在同一目录，macOS 执行 `shasum -a 256 -c SHA256SUMS`，Linux 执行 `sha256sum -c SHA256SUMS`。
+安装包与 SHA-256 校验值统一放在 [`releases/v1.0.3/`](releases/v1.0.3/)。需要校验时，将 `SHA256SUMS` 与安装包放在同一目录，macOS 执行 `shasum -a 256 -c SHA256SUMS`，Linux 执行 `sha256sum -c SHA256SUMS`。
 
 ## 1. 准备目录结构
 
@@ -69,6 +69,8 @@ Git 会在命令指定的位置创建目录；`.worktrees` 只是约定名称。
 ```
 
 已有保存好的工作区时，将这些设置合入它的 `settings` 即可。`requirementWorkspaces.root` 支持绝对路径，也支持相对 `.code-workspace` 文件的路径。
+
+也可以直接在工作区目录执行 `code .`。把相同的 Git 发现设置写入仓库的 `.vscode/settings.json` 后，自动 worktree 发现保持关闭，插件只打开当前主工作区或所选需求需要的仓库。
 
 ## 3. 选择父目录并查看需求改动
 
@@ -146,4 +148,4 @@ npm run package
 
 ## 发布到 Marketplace
 
-安装包已配置发布者 **Lip9527**。登录 [Marketplace 发布者管理页面](https://marketplace.visualstudio.com/manage)，选择该发布者；首次发布通过 **New extension → Visual Studio Code** 上传 `releases/v1.0.2/gwm-1.0.2.vsix`，后续版本在已有扩展条目中更新。本仓库的构建和 Git 推送不会自动发布到 Marketplace。
+安装包已配置发布者 **Lip9527**。登录 [Marketplace 发布者管理页面](https://marketplace.visualstudio.com/manage)，选择该发布者；首次发布通过 **New extension → Visual Studio Code** 上传 `releases/v1.0.3/gwm-1.0.3.vsix`，后续版本在已有扩展条目中更新。本仓库的构建和 Git 推送不会自动发布到 Marketplace。
