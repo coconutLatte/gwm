@@ -60,9 +60,18 @@ jobs:
         run: npm run package
 
       - name: Publish with Marketplace trusted publishing
+        if: vars.MARKETPLACE_AUTH == 'oidc'
         run: >-
           npx --no-install vsce publish
           --oidc
+          --packagePath "releases/v${EXTENSION_VERSION}/gwm-${EXTENSION_VERSION}.vsix"
+
+      - name: Publish with temporary Marketplace PAT
+        if: vars.MARKETPLACE_AUTH != 'oidc'
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: >-
+          npx --no-install vsce publish
           --packagePath "releases/v${EXTENSION_VERSION}/gwm-${EXTENSION_VERSION}.vsix"
 
       - name: Upload release package

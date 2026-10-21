@@ -148,7 +148,7 @@ npm run package
 
 ## 发布到 Marketplace
 
-安装包已配置发布者 **Lip9527**。在 [Marketplace 发布者管理页面](https://marketplace.visualstudio.com/manage) 为仓库 `coconutLatte/gwm` 和工作流 `.github/workflows/publish.yml` 配置 trusted publishing 策略。授权后，GitHub Actions 使用短期 OIDC 凭据发布，不需要保存 PAT 或 `VSCE_PAT` secret。
+安装包已配置发布者 **Lip9527**。截至 2026 年 10 月，Visual Studio Marketplace 尚未向发布者开放用于配置 repository/workflow 的 trusted publishing 页面；微软说明该后端仍在测试。因此工作流同时支持当前可用的 PAT 方式和未来的 OIDC 方式。
 
 策略配置完成后，推送与 `package.json` 版本一致的 release tag 即可自动发布：
 
@@ -157,6 +157,10 @@ git tag v1.0.3
 git push origin v1.0.3
 ```
 
-工作流会执行类型检查和测试，打包 `package.json` 对应版本，使用 `vsce publish --oidc` 发布 VSIX，并把安装包上传为 Actions artifact。也可以在 **Publish VS Code Extension** 工作流中手动输入已有 tag 启动。Marketplace 通常会在几分钟内展示新版本。
+当前发布需要创建具有 **Marketplace (Manage)** 权限、可访问 **All accessible organizations** 的 Azure DevOps PAT，并保存为 GitHub Actions secret `VSCE_PAT`。默认方式不需要设置仓库变量。
+
+微软开放 trusted publishing 后，在 Marketplace 中配置仓库 `coconutLatte/gwm` 和工作流 `.github/workflows/publish.yml`，再创建仓库变量 `MARKETPLACE_AUTH=oidc`。工作流会自动改用短期 GitHub OIDC 凭据，无需修改发布命令。
+
+工作流会执行类型检查和测试，打包 `package.json` 对应版本，发布 VSIX，并把安装包上传为 Actions artifact。也可以在 **Publish VS Code Extension** 工作流中手动输入已有 tag 启动。Marketplace 通常会在几分钟内展示新版本。
 
 版本说明从 [CHANGELOG.md](CHANGELOG.md) 读取。每个版本的第一段应聚焦用户可感知的行为变化，并写明发布日期。

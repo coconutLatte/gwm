@@ -148,7 +148,7 @@ See [CHANGELOG.md](CHANGELOG.md) for release notes. This repository currently re
 
 ## Marketplace publishing
 
-The package is configured for publisher **Lip9527**. Add a trusted publishing policy for repository `coconutLatte/gwm` and workflow `.github/workflows/publish.yml` in [Marketplace publisher management](https://marketplace.visualstudio.com/manage). The policy authorizes short-lived GitHub Actions OIDC credentials, so no PAT or `VSCE_PAT` secret is required.
+The package is configured for publisher **Lip9527**. As of October 2026, Visual Studio Marketplace has not yet exposed the trusted-publishing configuration page for repository and workflow policies; Microsoft reports that this backend is still being tested. The workflow therefore supports both the currently available PAT path and the future OIDC path.
 
 After the policy is configured, pushing a matching release tag publishes automatically:
 
@@ -157,6 +157,10 @@ git tag v1.0.3
 git push origin v1.0.3
 ```
 
-The workflow runs type checks and tests, packages the version stored in `package.json`, publishes the matching VSIX with `vsce publish --oidc`, and uploads the package as a workflow artifact. The **Publish VS Code Extension** workflow can also be started manually with an existing tag. Marketplace installation updates usually become visible within a few minutes.
+To publish now, create an Azure DevOps PAT with the **Marketplace (Manage)** scope and access to **All accessible organizations**, then store it as the GitHub Actions secret `VSCE_PAT`. No repository variable is needed for this default mode.
+
+When Microsoft enables trusted publishing for the publisher, configure `coconutLatte/gwm` and `.github/workflows/publish.yml` in Marketplace, create a repository variable `MARKETPLACE_AUTH=oidc`, and the workflow will switch to short-lived GitHub OIDC credentials without changing the publish command.
+
+The workflow runs type checks and tests, packages the version stored in `package.json`, publishes the matching VSIX, and uploads the package as a workflow artifact. The **Publish VS Code Extension** workflow can also be started manually with an existing tag. Marketplace installation updates usually become visible within a few minutes.
 
 Release notes are read from [CHANGELOG.md](CHANGELOG.md). Keep each version’s first section focused on user-visible behavior and include the release date.
