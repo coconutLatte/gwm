@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.10.1 — 2026-10-30
+
+### Fixed / 修复
+
+- Updated the VS Code extension publisher used by GitHub Actions OIDC publishing.
+- 更新 GitHub Actions OIDC 发布使用的 VS Code 扩展发布工具版本。
+
 ## 1.10.0 — 2026-10-30
 
 ### Changed / 调整

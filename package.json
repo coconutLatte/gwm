@@ -2,7 +2,7 @@
   "name": "requirement-workspaces",
   "displayName": "worktree manage",
   "description": "%extension.description%",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "publisher": "Lip9527",
   "private": true,
   "license": "UNLICENSED",
@@ -176,7 +176,7 @@
     "@types/node": "^22.0.0",
     "@types/vscode": "^1.100.0",
     "@vscode/test-electron": "^2.5.2",
-    "@vscode/vsce": "^4.0.0",
+    "@vscode/vsce": "^4.1.0",
     "esbuild": "^0.25.0",
     "typescript": "~5.9.0"
   },
