@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.0.8 — 2026-10-30
+
+### Added / 新增
+
+- Added a confirmed **Delete Worktree** action to requirement nodes. It cleans linked Git worktree metadata and removes the selected requirement directory.
+- 在需求节点右键菜单中新增带确认的“删除 Worktree”，会清理关联 Git worktree 元数据并删除选中的需求目录。
+
 ## 1.0.7 — 2026-10-30
 
 ### Fixed / 修复

@@ -82,6 +82,10 @@ Git 会在命令指定的位置创建目录；`.worktrees` 只是约定名称。
 
 没有配置或手动选择父目录时，插件会从已打开的目录及其上级查找 `.worktrees`。通过文件夹按钮选择的目录会为当前工作区保存；非空的 `requirementWorkspaces.root` 设置优先级更高。
 
+### 删除 Worktree
+
+在 **worktree manage** 树中右键需求，选择 **删除 Worktree**。插件会先要求确认；如果当前正在查看该需求，会先切回主工作区，然后清理关联 Git worktree 元数据并删除该需求目录。删除前请关闭或保存该 worktree 下的文件，目录中的未提交改动无法恢复。
+
 ### 返回主目录下的仓库
 
 点击需求树顶部 **“主工作区 · workspace”**、工具栏的房子按钮，或执行命令 **“worktree manage: 返回主工作区”**。Explorer 会回到 worktree 父目录的上一层；源代码管理显示这一层的直接子仓库。上面的示例中，对应 `service-api/` 和 `web-app/`。

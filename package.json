@@ -2,7 +2,7 @@
   "name": "requirement-workspaces",
   "displayName": "worktree manage",
   "description": "%extension.description%",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "publisher": "Lip9527",
   "private": true,
   "license": "UNLICENSED",
@@ -73,6 +73,12 @@
         "icon": "$(go-to-file)"
       },
       {
+        "command": "requirementWorkspaces.deleteRequirement",
+        "title": "%requirementWorkspaces.deleteRequirement.title%",
+        "category": "worktree manage",
+        "icon": "$(trash)"
+      },
+      {
         "command": "requirementWorkspaces.reviewCommits",
         "title": "%requirementWorkspaces.reviewCommits.title%",
         "category": "worktree manage",
@@ -137,6 +143,11 @@
         {
           "command": "requirementWorkspaces.reviewCommits",
           "when": "view == requirementWorkspaces.requirements && viewItem == requirementRepository",
+          "group": "inline"
+        },
+        {
+          "command": "requirementWorkspaces.deleteRequirement",
+          "when": "view == requirementWorkspaces.requirements && viewItem == requirement",
           "group": "inline"
         }
       ]

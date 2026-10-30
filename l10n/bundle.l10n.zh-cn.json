@@ -64,4 +64,10 @@
   "Select commits from one repository to review their combined net changes.": "勾选同一仓库的多个 commit，查看合并后的净改动。",
   "Only selected commits are included. Uncommitted changes are excluded.": "只包含勾选提交，不包含未提交改动。",
   "Select repository and commits": "选择仓库和提交"
+  ,"Delete Worktree": "删除 Worktree"
+  ,"Delete worktree \"{0}\" and all its repositories? Uncommitted changes will be lost.": "删除 Worktree“{0}”及其全部仓库？未提交的改动将丢失。"
+  ,"Close or save files under this worktree before deleting it.": "请先关闭或保存此 Worktree 下的文件。"
+  ,"Deleting worktree…": "正在删除 Worktree…"
+  ,"Worktree deleted: {0}": "Worktree 已删除：{0}"
+  ,"Worktree no longer exists: {0}": "Worktree 已不存在：{0}"
 }

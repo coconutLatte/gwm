@@ -7,6 +7,7 @@
   "requirementWorkspaces.choose.title": "Switch Requirement",
   "requirementWorkspaces.selectMain.title": "Return to Main Workspace",
   "requirementWorkspaces.select.title": "View Requirement Changes",
+  "requirementWorkspaces.deleteRequirement.title": "Delete Worktree",
   "requirementWorkspaces.reviewCommits.title": "Select Commits for Combined Review",
   "requirementWorkspaces.openReviewFile.title": "View Combined Diff",
   "requirementWorkspaces.clearReview.title": "Clear Commit Review",

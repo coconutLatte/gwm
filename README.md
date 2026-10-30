@@ -82,6 +82,10 @@ You can also open the workspace folder directly with `code .`. Put the same Git 
 
 When no root is configured or selected, GWM looks for `.worktrees` from the open folders and their ancestors. The root selected through the folder button is remembered for the workspace; a nonempty `requirementWorkspaces.root` setting takes priority.
 
+### Delete a worktree
+
+Right-click a requirement in the **worktree manage** tree and choose **Delete Worktree**. GWM asks for confirmation, switches to the main workspace when needed, removes linked Git worktree metadata, and deletes that requirement directory. Close or save files under the worktree before deleting it; uncommitted changes in the deleted directory are not recoverable.
+
 ### Return to the main repositories
 
 Click **Main Workspace · workspace** at the top of the tree, the home button, or run **worktree manage: Return to Main Workspace**. Explorer returns to the folder above the worktree parent; Source Control shows Git repositories directly inside that folder. With the example above, these are `service-api/` and `web-app/`.

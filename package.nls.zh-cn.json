@@ -7,6 +7,7 @@
   "requirementWorkspaces.choose.title": "切换需求",
   "requirementWorkspaces.selectMain.title": "返回主工作区",
   "requirementWorkspaces.select.title": "查看需求改动",
+  "requirementWorkspaces.deleteRequirement.title": "删除 Worktree",
   "requirementWorkspaces.reviewCommits.title": "勾选提交并汇总 Review",
   "requirementWorkspaces.openReviewFile.title": "查看汇总 diff",
   "requirementWorkspaces.clearReview.title": "清除提交汇总",

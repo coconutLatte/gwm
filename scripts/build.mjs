@@ -8,6 +8,7 @@ await build({
     extension: 'src/extension.ts',
     'catalog.test': 'test/catalog.test.ts',
     'commitReview.test': 'test/commitReview.test.ts',
+    'worktreeDelete.test': 'test/worktreeDelete.test.ts',
     integration: 'test/integration.ts',
   },
   outdir: 'dist',

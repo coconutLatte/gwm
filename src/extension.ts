@@ -5,6 +5,7 @@ import { scanRequirements, scanRepositories, samePaths, findWorktreeRoot, type R
 import { changedFileCount, type GitApi, type GitExtension, type GitRepository } from './gitApi';
 import { ReviewView, type ReviewApi } from './reviewView';
 import { repositoryVisibilityResetCommands } from './scmVisibility';
+import { deleteRequirementWorktree } from './worktreeDelete';
 
 const VIEW = 'requirementWorkspaces.requirements';
 const PREFIX = 'requirementWorkspaces';
@@ -82,6 +83,8 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
         const name = typeof node === 'string' ? node : node.requirement.name;
         return this.selectRequirement(name).catch(showError);
       }),
+      vscode.commands.registerCommand(`${PREFIX}.deleteRequirement`, (node?: Node) =>
+        this.deleteRequirement(node).catch(showError)),
     );
   }
 
@@ -330,6 +333,34 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
     if (selection) await this.selectRequirement(selection.id);
   }
 
+  private async deleteRequirement(node?: Node): Promise<void> {
+    if (!node || node.kind !== 'requirement' || node.requirement.main) return;
+    await this.refreshQueue.catch(() => {});
+    if (!this.root) throw new Error(t('Select the worktree parent folder first.'));
+    const requirement = (await scanRequirements(this.root)).find(item => item.name === node.requirement.name);
+    if (!requirement) throw new Error(t('Worktree no longer exists: {0}', node.requirement.name));
+
+    const dirty = vscode.workspace.textDocuments.some(document =>
+      document.isDirty && document.uri.scheme === 'file' && isWithin(requirement.path, document.uri.fsPath));
+    if (dirty) {
+      void vscode.window.showErrorMessage(t('Close or save files under this worktree before deleting it.'));
+      return;
+    }
+
+    const deleteLabel = t('Delete Worktree');
+    const choice = await vscode.window.showWarningMessage(
+      t('Delete worktree "{0}" and all its repositories? Uncommitted changes will be lost.', requirement.name),
+      { modal: true, detail: requirement.path }, deleteLabel);
+    if (choice !== deleteLabel) return;
+
+    if (this.active === requirement.name) await this.selectMainWorkspace();
+    await vscode.window.withProgress(
+      { location: vscode.ProgressLocation.Notification, title: t('Deleting worktree…') },
+      () => deleteRequirementWorktree(requirement.path, requirement.repositories.map(repository => repository.path)));
+    await this.refresh();
+    void vscode.window.showInformationMessage(t('Worktree deleted: {0}', requirement.name));
+  }
+
   private async chooseRoot(): Promise<void> {
     const choice = await vscode.window.showOpenDialog({
       title: t('Select Worktree Parent Folder'), canSelectFiles: false,
@@ -361,6 +392,11 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
 
 function showError(error: unknown): void {
   void vscode.window.showErrorMessage(`worktree manage: ${error instanceof Error ? error.message : String(error)}`);
+}
+
+function isWithin(parent: string, child: string): boolean {
+  const relative = path.relative(path.resolve(parent), path.resolve(child));
+  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
 }
 
 async function applyScmSelectionMode(mode: string): Promise<void> {
