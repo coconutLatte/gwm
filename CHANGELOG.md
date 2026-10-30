@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.0.4 — 2026-10-30
+
+### Fixed / 修复
+
+- Restored all repositories in the selected requirement to native Source Control when VS Code had a stale multi-repository visibility selection.
+- 修复 VS Code 保留过期的多仓库可见性选择时，当前需求的部分仓库未显示在原生源代码管理中的问题。
+
 ## 1.0.3 — 2026-10-21
 
 ### Fixed / 修复
