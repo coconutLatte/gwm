@@ -257,8 +257,8 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
       const selectionMode = vscode.workspace.getConfiguration('scm.repositories').get<string>('selectionMode', 'multiple');
       const visibilityCommands = requirement.repositories.length > 1
         ? repositoryVisibilityResetCommands(selectionMode) : [];
-      for (const command of visibilityCommands) {
-        await waitForScmSelectionMode(command);
+      for (const mode of visibilityCommands) {
+        await applyScmSelectionMode(mode);
       }
       if (visibilityCommands.length) await new Promise(resolve => setTimeout(resolve, 50));
     } finally {
@@ -363,8 +363,9 @@ function showError(error: unknown): void {
   void vscode.window.showErrorMessage(`worktree manage: ${error instanceof Error ? error.message : String(error)}`);
 }
 
-async function waitForScmSelectionMode(command: string): Promise<void> {
-  await vscode.commands.executeCommand(command);
+async function applyScmSelectionMode(mode: string): Promise<void> {
+  await vscode.workspace.getConfiguration('scm.repositories').update(
+    'selectionMode', mode, vscode.ConfigurationTarget.Workspace);
   await new Promise(resolve => setTimeout(resolve, 200));
 }
 

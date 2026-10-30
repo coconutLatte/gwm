@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.0.7 — 2026-10-30
+
+### Fixed / 修复
+
+- Rebuilt the SCM visible repository set through the public workspace configuration API so stale single-repository state is cleared reliably.
+- 改用 VS Code 公共工作区配置 API 重建源代码管理的可见仓库集合，可靠清除残留的单仓库状态。
+
 ## 1.0.6 — 2026-10-30
 
 ### Fixed / 修复

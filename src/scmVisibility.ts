@@ -1,6 +1,6 @@
 export const scmSelectionModeCommands = {
-  single: 'workbench.scm.action.repositories.setSelectionMode.single',
-  multiple: 'workbench.scm.action.repositories.setSelectionMode.multiple',
+  single: 'single',
+  multiple: 'multiple',
 } as const;
 
 /**
