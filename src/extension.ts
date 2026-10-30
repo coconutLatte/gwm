@@ -353,6 +353,12 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
       { modal: true, detail: requirement.path }, deleteLabel);
     if (choice !== deleteLabel) return;
 
+    const finalDeleteLabel = t('Confirm Delete Worktree');
+    const finalChoice = await vscode.window.showWarningMessage(
+      t('Final confirmation: permanently delete "{0}"?', requirement.name),
+      { modal: true, detail: t('This removes the directory and cannot be undone.') }, finalDeleteLabel);
+    if (finalChoice !== finalDeleteLabel) return;
+
     if (this.active === requirement.name) await this.selectMainWorkspace();
     await vscode.window.withProgress(
       { location: vscode.ProgressLocation.Notification, title: t('Deleting worktree…') },

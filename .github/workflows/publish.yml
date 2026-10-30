@@ -7,12 +7,12 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Existing release tag, for example v1.0.8
+        description: Existing release tag, for example v1.0.9
         required: true
         type: string
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 concurrency:
@@ -42,6 +42,7 @@ jobs:
             echo "Release tag '$tag' does not match package version 'v$version'." >&2
             exit 1
           fi
+          echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
           echo "EXTENSION_VERSION=$version" >> "$GITHUB_ENV"
 
       - name: Set up Node.js
@@ -84,3 +85,35 @@ jobs:
         with:
           name: gwm-v${{ env.EXTENSION_VERSION }}
           path: releases/v${{ env.EXTENSION_VERSION }}/
+
+      - name: Extract GitHub Release notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          awk -v version="$EXTENSION_VERSION" '
+            $0 ~ "^## " version "([[:space:]]|$)" { found=1; next }
+            found && /^## / { exit }
+            found { print }
+          ' CHANGELOG.md > "$RUNNER_TEMP/release-notes.md"
+          test -s "$RUNNER_TEMP/release-notes.md"
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          vsix="releases/v${EXTENSION_VERSION}/gwm-${EXTENSION_VERSION}.vsix"
+          checksums="releases/v${EXTENSION_VERSION}/SHA256SUMS"
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release edit "$RELEASE_TAG" \
+              --title "GWM $RELEASE_TAG" \
+              --notes-file "$RUNNER_TEMP/release-notes.md"
+            gh release upload "$RELEASE_TAG" "$vsix" "$checksums" --clobber
+          else
+            gh release create "$RELEASE_TAG" \
+              --verify-tag \
+              --title "GWM $RELEASE_TAG" \
+              --notes-file "$RUNNER_TEMP/release-notes.md" \
+              "$vsix" "$checksums"
+          fi

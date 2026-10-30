@@ -65,6 +65,9 @@
   "Only selected commits are included. Uncommitted changes are excluded.": "只包含勾选提交，不包含未提交改动。",
   "Select repository and commits": "选择仓库和提交"
   ,"Delete Worktree": "删除 Worktree"
+  ,"Confirm Delete Worktree": "确认删除 Worktree"
+  ,"Final confirmation: permanently delete \"{0}\"?": "最终确认：永久删除“{0}”？"
+  ,"This removes the directory and cannot be undone.": "这会删除整个目录，无法撤销。"
   ,"Delete worktree \"{0}\" and all its repositories? Uncommitted changes will be lost.": "删除 Worktree“{0}”及其全部仓库？未提交的改动将丢失。"
   ,"Close or save files under this worktree before deleting it.": "请先关闭或保存此 Worktree 下的文件。"
   ,"Deleting worktree…": "正在删除 Worktree…"

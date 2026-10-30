@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.0.9 — 2026-10-30
+
+### Changed / 调整
+
+- Added a second modal confirmation before a worktree is permanently deleted.
+- 删除 Worktree 前增加第二次弹窗确认。
+
 ## 1.0.8 — 2026-10-30
 
 ### Added / 新增
