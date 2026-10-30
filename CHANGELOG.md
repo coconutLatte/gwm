@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.10.0 — 2026-10-30
+
+### Changed / 调整
+
+- Test release for GitHub Actions OIDC publishing and GitHub Release automation.
+- 用于验证 GitHub Actions OIDC 发布和 GitHub Release 自动发布的测试版本。
+
 ## 1.0.9 — 2026-10-30
 
 ### Changed / 调整

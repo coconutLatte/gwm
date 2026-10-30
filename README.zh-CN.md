@@ -4,21 +4,21 @@
 
 在 VS Code 中按需求管理多个 Git 仓库的查看范围。通过 **worktree manage** 需求树选择需求，再用 VS Code 内置源代码管理和 diff 编辑器查看各仓库的改动；也可以勾选多个提交，在同一份文件列表里 review 它们合并后的净改动。
 
-## 安装 v1.0.9
+## 安装 v1.10.0
 
 需要 **VS Code 1.100 及以上版本**、可通过 `PATH` 调用的 Git，以及已启用的 VS Code 内置 **Git** 扩展。直接安装插件不需要 Node.js；从源码构建时才需要。
 
-1. 下载 [gwm-1.0.9.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.9/releases/v1.0.9/gwm-1.0.9.vsix)。
+1. 下载 [gwm-1.10.0.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.10.0/releases/v1.10.0/gwm-1.10.0.vsix)。
 2. 打开 VS Code 的**扩展**面板，点击 **… → 从 VSIX 安装…**，选择下载的文件。
 3. 如有提示，在命令面板执行 **开发人员: 重新加载窗口（Developer: Reload Window）**。
 
 也可以通过终端安装：
 
 ```sh
-code --install-extension ./gwm-1.0.9.vsix --force
+code --install-extension ./gwm-1.10.0.vsix --force
 ```
 
-安装包与 SHA-256 校验值统一放在 [`releases/v1.0.9/`](releases/v1.0.9/)。需要校验时，将 `SHA256SUMS` 与安装包放在同一目录，macOS 执行 `shasum -a 256 -c SHA256SUMS`，Linux 执行 `sha256sum -c SHA256SUMS`。
+安装包与 SHA-256 校验值统一放在 [`releases/v1.10.0/`](releases/v1.10.0/)。需要校验时，将 `SHA256SUMS` 与安装包放在同一目录，macOS 执行 `shasum -a 256 -c SHA256SUMS`，Linux 执行 `sha256sum -c SHA256SUMS`。
 
 ## 1. 准备目录结构
 
@@ -157,8 +157,8 @@ npm run package
 策略配置完成后，推送与 `package.json` 版本一致的 release tag 即可自动发布：
 
 ```sh
-git tag v1.0.9
-git push origin v1.0.9
+git tag v1.10.0
+git push origin v1.10.0
 ```
 
 当前发布需要创建具有 **Marketplace (Manage)** 权限的 Azure DevOps PAT，并保存为 GitHub Actions secret `VSCE_PAT`。默认方式不需要设置仓库变量。如果还没有配置发布凭据，工作流仍会执行检查、构建 VSIX 并上传 artifact，但会跳过 Marketplace 上传。
