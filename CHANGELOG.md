@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.0.6 — 2026-10-30
+
+### Fixed / 修复
+
+- Restored multiple repository selection when a previous failed reset left VS Code in single-repository mode.
+- 修复此前重置失败导致 VS Code 残留单仓库模式、需求下多个仓库无法同时显示的问题。
+
 ## 1.0.5 — 2026-10-30
 
 ### Fixed / 修复

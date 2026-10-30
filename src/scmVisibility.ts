@@ -11,5 +11,5 @@ export const scmSelectionModeCommands = {
 export function repositoryVisibilityResetCommands(selectionMode: string): readonly string[] {
   return selectionMode === 'multiple'
     ? [scmSelectionModeCommands.single, scmSelectionModeCommands.multiple]
-    : [];
+    : [scmSelectionModeCommands.multiple];
 }

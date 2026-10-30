@@ -11,7 +11,7 @@ test('resets stale SCM visibility when multiple repositories are selected', () =
     scmSelectionModeCommands.single,
     scmSelectionModeCommands.multiple,
   ]);
-  assert.deepEqual(repositoryVisibilityResetCommands('single'), []);
+  assert.deepEqual(repositoryVisibilityResetCommands('single'), [scmSelectionModeCommands.multiple]);
 });
 
 test('discovers linked worktrees and ordinary repos without following symlinks or nested dependencies', async () => {
