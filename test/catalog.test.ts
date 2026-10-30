@@ -4,6 +4,15 @@ import { promises as fs } from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import { scanRequirements, scanRepositories, findWorktreeRoot, samePaths } from '../src/catalog';
+import { repositoryVisibilityResetCommands, scmSelectionModeCommands } from '../src/scmVisibility';
+
+test('resets stale SCM visibility when multiple repositories are selected', () => {
+  assert.deepEqual(repositoryVisibilityResetCommands('multiple'), [
+    scmSelectionModeCommands.single,
+    scmSelectionModeCommands.multiple,
+  ]);
+  assert.deepEqual(repositoryVisibilityResetCommands('single'), []);
+});
 
 test('discovers linked worktrees and ordinary repos without following symlinks or nested dependencies', async () => {
   const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'requirement-catalog-'));

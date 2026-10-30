@@ -4,6 +4,7 @@ import * as path from 'node:path';
 import { scanRequirements, scanRepositories, samePaths, findWorktreeRoot, type Requirement, type RequirementRepository } from './catalog';
 import { changedFileCount, type GitApi, type GitExtension, type GitRepository } from './gitApi';
 import { ReviewView, type ReviewApi } from './reviewView';
+import { repositoryVisibilityResetCommands } from './scmVisibility';
 
 const VIEW = 'requirementWorkspaces.requirements';
 const PREFIX = 'requirementWorkspaces';
@@ -252,6 +253,10 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
           // Explicitly reopen a repository previously closed in the SCM view.
           await vscode.commands.executeCommand('git.openRepository', repository.path);
         }
+      }
+      const selectionMode = vscode.workspace.getConfiguration('scm.repositories').get<string>('selectionMode', 'multiple');
+      for (const command of repositoryVisibilityResetCommands(selectionMode)) {
+        await vscode.commands.executeCommand(command);
       }
     } finally {
       this.reconciling = false;
