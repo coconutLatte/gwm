@@ -1,5 +1,12 @@
 # Changelog / 更新日志
 
+## 1.0.5 — 2026-10-30
+
+### Fixed / 修复
+
+- Waited for VS Code to apply each SCM selection-mode change before applying the next one, preventing the visible repository set from collapsing to one repository after reload.
+- 等待 VS Code 完成每次源代码管理选择模式切换后再执行下一步，避免重载后可见仓库集合被收缩为一个仓库。
+
 ## 1.0.4 — 2026-10-30
 
 ### Fixed / 修复

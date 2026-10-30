@@ -256,8 +256,9 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
       }
       const selectionMode = vscode.workspace.getConfiguration('scm.repositories').get<string>('selectionMode', 'multiple');
       for (const command of repositoryVisibilityResetCommands(selectionMode)) {
-        await vscode.commands.executeCommand(command);
+        await waitForScmSelectionMode(command);
       }
+      if (repositoryVisibilityResetCommands(selectionMode).length) await new Promise(resolve => setTimeout(resolve, 50));
     } finally {
       this.reconciling = false;
     }
@@ -358,6 +359,31 @@ class Navigator implements vscode.TreeDataProvider<Node>, vscode.Disposable, Nav
 
 function showError(error: unknown): void {
   void vscode.window.showErrorMessage(`worktree manage: ${error instanceof Error ? error.message : String(error)}`);
+}
+
+async function waitForScmSelectionMode(command: string): Promise<void> {
+  const target = command.endsWith('.single') ? 'single' : 'multiple';
+  const configuration = vscode.workspace.getConfiguration('scm.repositories');
+  if (configuration.get<string>('selectionMode') === target) return;
+  await new Promise<void>((resolve, reject) => {
+    let settled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const finish = (error?: unknown): void => {
+      if (settled) return;
+      settled = true;
+      listener.dispose();
+      if (timer) clearTimeout(timer);
+      error ? reject(error) : resolve();
+    };
+    const listener = vscode.workspace.onDidChangeConfiguration(event => {
+      if (event.affectsConfiguration('scm.repositories.selectionMode') &&
+          configuration.get<string>('selectionMode') === target) finish();
+    });
+    timer = setTimeout(() => finish(new Error('Timed out while updating SCM repository selection.')), 5000);
+    void vscode.commands.executeCommand(command).then(() => {
+      if (configuration.get<string>('selectionMode') === target) finish();
+    }, finish);
+  });
 }
 
 export async function activate(context: vscode.ExtensionContext): Promise<NavigatorApi & ReviewApi> {

@@ -4,21 +4,21 @@
 
 Review multiple Git repositories grouped by requirement in VS Code. Choose a requirement in the **worktree manage** tree, then inspect its repositories with VS Code's built-in Source Control and diff editors. Select commits to review their combined net changes in one file list.
 
-## Install v1.0.4
+## Install v1.0.5
 
 Requires **VS Code 1.100 or later**, Git available on `PATH`, and the built-in **Git** extension enabled. Node.js is only needed to build from source.
 
-1. Download [gwm-1.0.4.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.4/releases/v1.0.4/gwm-1.0.4.vsix).
+1. Download [gwm-1.0.5.vsix](https://github.com/coconutLatte/gwm/raw/refs/tags/v1.0.5/releases/v1.0.5/gwm-1.0.5.vsix).
 2. In VS Code, open **Extensions**, click **… → Install from VSIX…**, and select the downloaded file.
 3. Run **Developer: Reload Window** from the Command Palette if prompted.
 
 Or install from a terminal:
 
 ```sh
-code --install-extension ./gwm-1.0.4.vsix --force
+code --install-extension ./gwm-1.0.5.vsix --force
 ```
 
-Packages and SHA-256 checksums are stored under [`releases/v1.0.4/`](releases/v1.0.4/). To verify a downloaded package on macOS, put `SHA256SUMS` beside it and run `shasum -a 256 -c SHA256SUMS`; on Linux use `sha256sum -c SHA256SUMS`.
+Packages and SHA-256 checksums are stored under [`releases/v1.0.5/`](releases/v1.0.5/). To verify a downloaded package on macOS, put `SHA256SUMS` beside it and run `shasum -a 256 -c SHA256SUMS`; on Linux use `sha256sum -c SHA256SUMS`.
 
 ## 1. Prepare the directory structure
 
@@ -153,8 +153,8 @@ The package is configured for publisher **Lip9527**. As of October 2026, Visual 
 After the policy is configured, pushing a matching release tag publishes automatically:
 
 ```sh
-git tag v1.0.4
-git push origin v1.0.4
+git tag v1.0.5
+git push origin v1.0.5
 ```
 
 To publish now, create an Azure DevOps PAT with the **Marketplace (Manage)** scope, then store it as the GitHub Actions secret `VSCE_PAT`. No repository variable is needed for this default mode. If no publishing credential is configured, the workflow still runs the checks, builds the VSIX and uploads it as an artifact, but skips the Marketplace upload.
